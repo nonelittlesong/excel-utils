@@ -1,22 +1,14 @@
-package com.maxnerva.cpqm.admin.excel.l10report;
-
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.constant.OrderConstant;
 import com.alibaba.excel.util.BooleanUtils;
 import com.alibaba.excel.write.handler.RowWriteHandler;
 import com.alibaba.excel.write.handler.context.RowWriteHandlerContext;
-import com.maxnerva.cpqm.admin.enums.ReportTypeEnum;
-import com.maxnerva.rfq.admin.utils.NumberUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.IndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 
-/**
- * @author Wu Xiaosong
- * @date 2023-03-24 10:29
- */
 public class L10ReportRowWriteHandler implements RowWriteHandler {
     private final XSSFCellStyle[] styles = new XSSFCellStyle[30];
 
@@ -37,7 +29,7 @@ public class L10ReportRowWriteHandler implements RowWriteHandler {
             return;
         }
         double level = 0;
-        if (isCtoBomReport(sheetName)) {
+        if (isSomeReport(sheetName)) {
             level = row.getCell(4).getNumericCellValue();
         } else {
             level = Double.parseDouble(row.getCell(4).getStringCellValue());
@@ -59,15 +51,11 @@ public class L10ReportRowWriteHandler implements RowWriteHandler {
         }
     }
 
-    private boolean isSbbMissingReport(String sheetName) {
-        return StrUtil.equalsIgnoreCase(sheetName, ReportTypeEnum.SBB_MISSING_REPORT.getSheetName());
-    }
-
-    private boolean isCtoBomReport(String sheetName) {
-        return StrUtil.equalsIgnoreCase(sheetName, ReportTypeEnum.CTO_BOM_REPORT.getSheetName());
-    }
-
     private boolean isTreeReport(String sheetName) {
-        return isCtoBomReport(sheetName) || isSbbMissingReport(sheetName);
+        return true;
+    }
+
+    private boolean isSomeReport(String sheetName) {
+        return true;
     }
 }
